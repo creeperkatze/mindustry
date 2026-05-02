@@ -19,6 +19,7 @@ import arc.util.io.Streams
 
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.regex.Pattern
 
 def genFolder = "../core/assets-raw/sprites_out/generated/"
 def enableAA = true
@@ -259,6 +260,160 @@ tasks.register('updateScripts', JavaExec){
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
     workingDir = "../"
+}
+
+tasks.register('validateBundles'){
+    doLast{
+        Pattern placeholderPattern = Pattern.compile("\\{[0-9]+(?:,[^{}]+)?\\}")
+
+        def placeholders = { String value ->
+            def out = new LinkedHashSet<String>()
+            def matcher = placeholderPattern.matcher(value)
+            while(matcher.find()){
+                out.add(matcher.group())
+            }
+            return out
+        }
+
+        def parseKey = { String line ->
+            String stripped = line.stripLeading()
+            if(stripped.isEmpty() || stripped.startsWith("#") || stripped.startsWith("!")) return null
+
+            boolean escaped = false
+            int separator = -1
+            for(int i = 0; i < line.length(); i++){
+                char ch = line.charAt(i)
+                if(escaped){
+                    escaped = false
+                }else if(ch == (char)'\\'){
+                    escaped = true
+                }else if(ch == (char)'=' || ch == (char)':' || Character.isWhitespace(ch)){
+                    separator = i
+                    break
+                }
+            }
+
+            return (separator == -1 ? line : line.substring(0, separator)).trim()
+        }
+
+        def duplicateKeys = { Fi file ->
+            def seen = new LinkedHashSet<String>()
+            def duplicates = new Seq<String>()
+            String logical = ""
+
+            file.reader("UTF-8").readLines().each{ String raw ->
+                logical = logical.isEmpty() ? raw : logical + raw.stripLeading()
+
+                int slashes = 0
+                for(int i = logical.length() - 1; i >= 0 && logical.charAt(i) == (char)'\\'; i--){
+                    slashes++
+                }
+
+                if(slashes % 2 == 1){
+                    logical = logical.substring(0, logical.length() - 1)
+                    return
+                }
+
+                String key = parseKey(logical)
+                if(key != null){
+                    if(seen.contains(key)){
+                        duplicates.add(key)
+                    }else{
+                        seen.add(key)
+                    }
+                }
+
+                logical = ""
+            }
+
+            if(!logical.isEmpty()){
+                String key = parseKey(logical)
+                if(key != null && seen.contains(key)) duplicates.add(key)
+            }
+
+            return duplicates
+        }
+
+        def errors = new Seq<String>()
+        def placeholderErrors = new Seq<String>()
+        boolean strictPlaceholders = project.hasProperty("strictBundlePlaceholders")
+        OrderedMap<String, String> base = new OrderedMap<>()
+        Fi baseFile = Fi.get("core/assets/bundles/bundle.properties")
+        PropertiesUtils.load(base, baseFile.reader("UTF-8"))
+
+        Seq<String> baseDuplicates = duplicateKeys(baseFile)
+        if(!baseDuplicates.isEmpty()){
+            errors.add("${baseFile}: duplicate keys: ${baseDuplicates.toString(', ')}")
+        }
+
+        Seq<String> locales = new Seq<>()
+
+        Fi.get("core/assets/bundles").walk{ Fi child ->
+            if(!child.name().startsWith("bundle_") || !child.name().endsWith(".properties")) return
+
+            locales.add(child.name().substring("bundle_".length(), child.name().lastIndexOf('.')))
+
+            OrderedMap<String, String> bundle = new OrderedMap<>()
+            PropertiesUtils.load(bundle, child.reader("UTF-8"))
+
+            Seq<String> duplicates = duplicateKeys(child)
+            if(!duplicates.isEmpty()){
+                errors.add("${child}: duplicate keys: ${duplicates.toString(', ')}")
+            }
+
+            Seq<String> missing = new Seq<>()
+            for(String key : base.orderedKeys()){
+                if(!bundle.containsKey(key)) missing.add(key)
+            }
+
+            Seq<String> extra = new Seq<>()
+            for(String key : bundle.orderedKeys()){
+                if(!base.containsKey(key)) extra.add(key)
+            }
+
+            if(!missing.isEmpty()){
+                errors.add("${child}: missing ${missing.size} base keys, first: ${missing.copy().truncate(5).toString(', ')}")
+            }
+            if(!extra.isEmpty()){
+                errors.add("${child}: contains ${extra.size} keys not in base bundle, first: ${extra.copy().truncate(5).toString(', ')}")
+            }
+
+            for(String key : base.orderedKeys()){
+                if(!bundle.containsKey(key)) continue
+
+                def expected = placeholders(base.get(key))
+                def actual = placeholders(bundle.get(key))
+                if(expected != actual){
+                    placeholderErrors.add("${child}: key '${key}' has placeholders ${actual}, expected ${expected}")
+                }
+            }
+        }
+
+        locales.sort()
+        String expectedLocales = "en\n" + locales.toString("\n") + "\n"
+        Fi localesFile = Fi.get("core/assets/locales")
+        if(localesFile.readString("UTF-8") != expectedLocales){
+            errors.add("${localesFile}: does not match bundle filenames; update the file or run './gradlew core:preGen'")
+        }
+
+        if(strictPlaceholders){
+            errors.addAll(placeholderErrors)
+        }else if(!placeholderErrors.isEmpty()){
+            Log.warn("@ placeholder mismatches found. Run with -PstrictBundlePlaceholders to fail on them.", placeholderErrors.size)
+            for(int i = 0; i < Math.min(placeholderErrors.size, 10); i++){
+                Log.warn("- @", placeholderErrors.get(i))
+            }
+            if(placeholderErrors.size > 10){
+                Log.warn("- ...and @ more.", placeholderErrors.size - 10)
+            }
+        }
+
+        if(!errors.isEmpty()){
+            throw new GradleException("Bundle validation failed:\n- " + errors.toString("\n- "))
+        }
+
+        Log.info("Validated @ translation bundles.", locales.size)
+    }
 }
 
 tasks.register('updateBundles'){
