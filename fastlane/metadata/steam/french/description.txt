@@ -1,62 +1,59 @@
-Mindustry est un jeu de construction d'usines, avec des éléments de tower defense et de RTS. Créez des chaînes d'approvisionnement élaborées pour alimenter vos tourelles, produire des matériaux de construction et fabriquer des unités. Donnez des ordres à vos unités pour capturer des bases ennemies et développez votre production. Défendez votre noyau contre des vagues d'ennemis.
+Mindustry est un jeu de construction d'usines, avec des éléments de tower
+defense et de RTS. Créez des chaînes d'approvisionnement élaborées pour
+alimenter vos tourelles, produire des matériaux de construction et fabriquer des
+unités. Donnez des ordres à vos unités pour capturer des bases ennemies et
+développez votre production. Défendez votre noyau contre des vagues d'ennemis.
 
-Jouez à la campagne en solo ou avec vos amis en coopération multijoueur multiplateforme, et défiez-les dans des matchs PvP par équipes.
+Jouez à la campagne en solo ou avec vos amis en coopération multijoueur
+multiplateforme, et défiez-les dans des matchs PvP par équipes.
 
 [img]{STEAM_APP_IMAGE}/extras/factory.gif[/img]
 
 [h2]Construction d'usines[/h2]
 
-[list]
-[*] Créez des chaînes d'approvisionnement élaborées avec des convoyeurs pour alimenter vos tourelles et produire des matériaux destinés à la construction
-[*] Utilisez des blocs de production pour créer une grande variété de matériaux avancés
-[*] Distribuez des liquides et gérez des défis permanents, comme des incendies ou des raids aériens
-[*] Tirez le meilleur parti de votre production en fournissant des liquides de refroidissement
-[*] Produisez une grande variété d'unités pour gérer automatiquement votre base ou attaquer les bases ennemies
-[/list]
+[list] [*] Create elaborate supply chains of conveyor belts to feed ammo into
+your turrets and produce materials to use for building [*] Use production blocks
+to create a wide variety of advanced materials [*] Distribute liquids and fight
+constant challenges, like outbreaks of fire or enemy flier raids [*] Get the
+most out of your production by supplying optional coolant and lubricant [*]
+Produce a wide variety of units for automatic management of your base or assault
+on enemy bases [/list]
 
 [h2]Défense avec des tourelles[/h2]
 
-[list]
-[*] Défendez vos structures contre des vagues ennemies
-[*] Placez vos tourelles de manière stratégique pour détruire les vagues ennemies avant qu'elles n'atteignent votre noyau
-[*] Alimentez vos tourelles en munitions, en liquide de refroidissement et en énergie
-[*] Renforcez vos défenses avec des boucliers, des bâtiments de réparation et d'autres bâtiments de soutien
-[/list]
+[list] [*] Defend your structures from waves of enemies [*] Strategically place
+your turrets to destroy them before they reach your core [*] Supply your turrets
+with ammo, coolant, and power [*] Bolster your defenses with powered shields,
+regeneration projectors and other support buildings [/list]
 
 [img]{STEAM_APP_IMAGE}/extras/rts3.png[/img]
 
 [h2]Stratégie en temps réel[/h2]
 
-[list]
-[*] Mettez en place des chaînes d'assemblage pour construire des armées d'unités mécanisées
-[*] Utilisez vos unités pour affronter des bases ennemies
-[*] Capturez davantage de territoire pour placer plus de noyaux et obtenir des ressources supplémentaires pour vous développer
-[/list]
+[list] [*] Set up assembly lines to construct armies of mechanized units [*] Use
+your units to square up against fully functional enemy bases [*] Capture more
+territory to place down more cores and get access to additional resources for
+expansion [/list]
 
 [h2]Campagne[/h2]
 
-[list]
-[*] Jouez à la campagne sur 2 planètes distinctes
-[*] Conquérez les planètes Serpulo et Erekir en progressant à travers 35 cartes faites à la main et plus de 250 secteurs générés procéduralement
-[*] Capturez des territoires et installez des usines pour produire des ressources pendant que vous jouez sur d'autres secteurs
-[*] Défendez vos secteurs contre des invasions périodiques
-[*] Coordonnez la distribution des ressources entre les secteurs via des rampes de lancement
-[*] Recherchez de nouveaux blocs pour poursuivre votre progression
-[*] Invitez vos amis à accomplir des missions ensemble
-[*] Plus de 250 blocs à débloquer
-[*] Plus de 50 types de drones, de mécas et de vaisseaux
-[*] Plus de 80 succès à débloquer
+[list] [*] Play through two separate planetary campaigns [*] Conquer the planet
+Serpulo and Erekir as you advance through 35 hand-made maps and 250+
+procedurally generated sectors [*] Capture territory and set up factories to
+produce resources while you play other sectors [*] Defend your sectors from
+periodic invasions [*] Coordinate resource distribution between sectors via
+launch pads [*] Research new blocks to fuel progress [*] Invite your friends to
+complete missions together [*] 250+ technology blocks to master [*] 50+
+different types of drones, mechs and ships [*] 80+ achievements to complete
 [/list]
 
 [h2]Communauté et création de mods[/h2]
 
-[list]
-[*] Utilisez le Steam Workshop pour parcourir des cartes et des schémas créés par la communauté
-[*] Rejoignez des serveurs communautaires publics pour jouer avec d'autres joueurs sur toutes les plateformes
-[*] Jouez en coop, en PvP ou en bac à sable
-[*] Les serveurs communautaires prennent en charge des plugins pour des cartes et des modes de jeu personnalisés
-[*] Créez un serveur dédié public ou invitez vos amis dans votre session privée
-[*] Règles de jeu personnalisables : modifiez le coût des blocs, les statistiques des ennemis, les objets de départ, le rythme des vagues et plus encore
-[*] L'éditeur de cartes intégré vous permet de créer vos propres cartes, pour y jouer et pour partager avec la communauté
-[*] Parcourez des mods créés par la communauté pour ajouter ou remixer encore plus de contenu
-[/list]
+[list] [*] Use the steam workshop to browse community-made maps and schematics
+[*] Join public community servers to play with others across platforms [*] Play
+co-op, PvP or sandbox [*] Community servers support plugins for custom maps and
+gamemodes [*] Create your public dedicated server, or invite friends to your own
+private session [*] Customizable game rules: Change block costs, enemy stats,
+starting items, wave timing and more [*] Built-in map editor lets you make your
+own maps to play and share with the community [*] Browse community-made mods to
+add or remix even more content [/list]
